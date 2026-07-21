@@ -80,8 +80,22 @@ export function localBusinessSchema() {
       name,
     })),
     knowsAbout: business.accreditations.map((a) => a.name),
+    sameAs: [...business.sameAs],
     aggregateRating,
     review: reviews,
+  };
+}
+
+/** The business owner, as a Person entity for author/E-E-A-T signals. */
+export function ownerPersonSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${SITE}/#owner`,
+    name: business.owner.name,
+    honorificPrefix: business.owner.honorific,
+    jobTitle: business.owner.role,
+    worksFor: { '@id': `${SITE}/#business` },
   };
 }
 
@@ -134,6 +148,8 @@ export function webPageSchema(path: string, name: string, description: string) {
     description,
     isPartOf: { '@id': `${SITE}/#website` },
     about: { '@id': `${SITE}/#business` },
+    author: { '@id': `${SITE}/#owner` },
+    publisher: { '@id': `${SITE}/#business` },
     inLanguage: 'en-GB',
     dateModified: BUILD_DATE,
   };

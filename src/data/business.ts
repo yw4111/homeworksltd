@@ -63,7 +63,16 @@ export const business = {
       note: 'Certass approved for window and door installations.',
     },
   ],
-  social: {
-    // Placeholder: owner to supply if these exist.
+  owner: {
+    name: 'James Edward Finch',
+    honorific: 'Mr',
+    displayName: 'Mr James Edward Finch',
+    role: 'Owner',
   },
+  // Official profiles, used for schema sameAs entity links.
+  sameAs: [
+    'https://twitter.com/hellohomeworks',
+    'https://www.linkedin.com/in/homeworks',
+    'https://www.checkatrade.com/trades/Homeworks',
+  ],
 } as const;

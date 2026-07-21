@@ -4,7 +4,12 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { business } from '../data/business';
 import { withBase } from '../lib/paths';
-import { localBusinessSchema, webSiteSchema, webPageSchema } from '../lib/schema';
+import {
+  localBusinessSchema,
+  webSiteSchema,
+  webPageSchema,
+  ownerPersonSchema,
+} from '../lib/schema';
 
 interface Props {
   title: string;
@@ -24,6 +29,7 @@ const fullTitle = title.includes(business.name) ? title : `${title} | ${business
 // so any single-page crawl sees the full picture.
 const allSchema = [
   localBusinessSchema(),
+  ownerPersonSchema(),
   webSiteSchema(),
   webPageSchema(path, fullTitle, description),
   ...schema,
