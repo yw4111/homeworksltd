@@ -4,19 +4,30 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { business } from '../data/business';
 import { withBase } from '../lib/paths';
+import { localBusinessSchema, webSiteSchema, webPageSchema } from '../lib/schema';
 
 interface Props {
   title: string;
   description: string;
   /** Path only, e.g. /services/plumbing */
   path?: string;
-  /** Array of JSON-LD objects to embed in the head */
+  /** Page-specific JSON-LD objects (FAQPage, Service, ItemList...). The
+      LocalBusiness, WebSite and dated WebPage nodes are added automatically. */
   schema?: unknown[];
 }
 
 const { title, description, path = '/', schema = [] } = Astro.props;
 const canonical = new URL(path, business.url).href;
 const fullTitle = title.includes(business.name) ? title : `${title} | ${business.name}`;
+
+// Every page carries the business entity, the site node and a dated page node,
+// so any single-page crawl sees the full picture.
+const allSchema = [
+  localBusinessSchema(),
+  webSiteSchema(),
+  webPageSchema(path, fullTitle, description),
+  ...schema,
+];
 ---
 
 <!doctype html>
@@ -28,6 +39,7 @@ const fullTitle = title.includes(business.name) ? title : `${title} | ${business
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="sitemap" type="application/xml" href={withBase('/sitemap-index.xml')} />
     <meta name="theme-color" content="#123a40" />
 
     <!-- Open Graph -->
@@ -39,7 +51,7 @@ const fullTitle = title.includes(business.name) ? title : `${title} | ${business
     <meta property="og:locale" content="en_GB" />
 
     {
-      schema.map((s) => (
+      allSchema.map((s) => (
         <script
           type="application/ld+json"
           set:html={JSON.stringify(s)}

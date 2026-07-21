@@ -2,17 +2,15 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { business } from '../data/business';
 import { services } from '../data/services';
-import { localBusinessSchema } from '../lib/schema';
 import { withBase } from '../lib/paths';
 
-const schema = [localBusinessSchema()];
+// LocalBusiness/WebSite/WebPage are added by BaseLayout on every page.
 ---
 
 <BaseLayout
   title="Contact and booking | Home Works Ltd"
   description="Contact Home Works Ltd to book building or maintenance work in Kent and the South East. Call 01689 86 11 11, email info@homeworksltd.co.uk, open Monday to Friday 9am to 5pm."
   path="/contact/"
-  schema={schema}
 >
   <section class="section section--petrol">
     <div class="wrap">

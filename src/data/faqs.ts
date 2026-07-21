@@ -3,6 +3,34 @@ export interface Faq {
   answer: string;
 }
 
+export const servicesFaqs: Faq[] = [
+  {
+    question: 'What services does Home Works Ltd offer?',
+    answer:
+      'Home Works Ltd offers boiler and heating work, electrical, plumbing, carpentry, general building, roofing, decorating, windows and doors, flooring, security, gardening, cleaning and insurance work. Every trade is handled by one company.',
+  },
+  {
+    question: 'Can one company handle a job that needs several trades?',
+    answer:
+      'Yes. Because we cover building, heating, electrical, plumbing, roofing and more in house, we can take on a job that crosses several trades without you having to line up separate contractors.',
+  },
+  {
+    question: 'Which trades are accredited?',
+    answer:
+      'Gas and boiler work is Gas Safe registered, electrical work is NICEIC approved, and window and door installations are Certass approved. We are also listed on Checkatrade.',
+  },
+  {
+    question: 'Do you charge for a quote?',
+    answer:
+      'We arrange a time to look at the work and give you a clear quote. We take a 25% deposit at booking, with the balance due on completion, and the price quoted is the price you pay.',
+  },
+  {
+    question: 'What areas do you cover for these services?',
+    answer:
+      'We cover Kent and the South East of England, working from a base in Orpington.',
+  },
+];
+
 export const homeFaqs: Faq[] = [
   {
     question: 'What areas does Home Works Ltd cover?',

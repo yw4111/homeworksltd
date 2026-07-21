@@ -2,6 +2,12 @@
 import { business } from '../data/business';
 import { services } from '../data/services';
 import { withBase } from '../lib/paths';
+import { BUILD_DATE } from '../lib/schema';
+
+const reviewed = new Date(BUILD_DATE).toLocaleDateString('en-GB', {
+  month: 'long',
+  year: 'numeric',
+});
 ---
 
 <footer class="site-footer">
@@ -44,6 +50,7 @@ import { withBase } from '../lib/paths';
       &copy; {new Date().getFullYear()} {business.name}. {business.establishedLabel}.
       Public liability insurance {business.insurance.limitDisplay} indemnity limit.
     </p>
+    <p class="site-footer__reviewed">Information last reviewed {reviewed}.</p>
   </div>
 </footer>
 

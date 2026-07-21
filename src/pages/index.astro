@@ -6,10 +6,11 @@ import FaqBlock from '../components/FaqBlock.astro';
 import { business } from '../data/business';
 import { services } from '../data/services';
 import { homeFaqs } from '../data/faqs';
-import { localBusinessSchema, faqSchema } from '../lib/schema';
+import { faqSchema } from '../lib/schema';
 import { withBase } from '../lib/paths';
 
-const schema = [localBusinessSchema(), faqSchema(homeFaqs)];
+// LocalBusiness/WebSite/WebPage are added by BaseLayout on every page.
+const schema = [faqSchema(homeFaqs)];
 
 const whyChoose = [
   {

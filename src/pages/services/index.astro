@@ -1,14 +1,21 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ServiceCard from '../../components/ServiceCard.astro';
+import FaqBlock from '../../components/FaqBlock.astro';
 import { business } from '../../data/business';
 import { services } from '../../data/services';
+import { servicesFaqs } from '../../data/faqs';
+import { servicesItemListSchema, faqSchema } from '../../lib/schema';
+import { withBase } from '../../lib/paths';
+
+const schema = [servicesItemListSchema(), faqSchema(servicesFaqs)];
 ---
 
 <BaseLayout
   title="Services | Home Works Ltd"
   description="Building, heating, electrical, plumbing, roofing, carpentry and more across Kent and the South East. Every trade handled by one accredited family firm since 1995."
   path="/services/"
+  schema={schema}
 >
   <section class="section section--petrol">
     <div class="wrap">
@@ -16,18 +23,78 @@ import { services } from '../../data/services';
       <h1>Our services</h1>
       <p class="lede" style="color: var(--stone);">
         Home Works Ltd covers building, maintenance and property repairs across
-        {business.areaServedDisplay}. Every service listed here is real work we
-        carry out. Pick a trade to see the detail, what is included and the
-        questions we get asked most.
+        {business.areaServedDisplay}. We handle boilers and heating, electrical,
+        plumbing, carpentry, general building, roofing, decorating, windows and
+        doors, flooring, security, gardening, cleaning and insurance work. Every
+        trade is delivered by one accredited family firm, trading since 1995.
+      </p>
+      <div class="svc-index-actions">
+        <a class="btn btn--primary" href={withBase('/contact/')}>Book a job</a>
+        <a class="btn btn--ghost" href={`tel:${business.phoneHref}`}>
+          Call {business.phoneDisplay}
+        </a>
+      </div>
+      <p class="svc-index-stamps">
+        {business.accreditations.map((a) => <span class="stamp">{a.name}</span>)}
       </p>
     </div>
   </section>
 
   <section class="section section--stone">
     <div class="wrap">
+      <p class="lede muted svc-index-intro">
+        Pick a trade to see what is included, how we work and the questions we get
+        asked most. Because we cover every trade in house, a job that needs more
+        than one is still handled by a single company.
+      </p>
       <div class="grid grid--3">
         {services.map((s, i) => <ServiceCard service={s} index={i} />)}
       </div>
     </div>
   </section>
+
+  <section class="section section--paper">
+    <div class="wrap svc-index-faq">
+      <span class="eyebrow">Answers</span>
+      <FaqBlock faqs={servicesFaqs} heading="Questions about our services" level="h2" />
+    </div>
+  </section>
+
+  <section class="section section--petrol">
+    <div class="wrap">
+      <h2>Not sure which trade you need?</h2>
+      <p class="lede" style="color: var(--stone);">
+        Tell us what the problem is and we will point you to the right service.
+        Call {business.phoneDisplay} or email {business.email}.
+      </p>
+      <div class="svc-index-actions">
+        <a class="btn btn--primary" href={withBase('/contact/')}>Contact and booking</a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .svc-index-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 1.5rem;
+  }
+
+  .svc-index-stamps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .svc-index-intro {
+    max-width: 46rem;
+    margin-bottom: 2rem;
+  }
+
+  .svc-index-faq {
+    max-width: 52rem;
+  }
+</style>

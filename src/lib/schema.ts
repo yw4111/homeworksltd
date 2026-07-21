@@ -1,9 +1,13 @@
 import { business } from '../data/business';
 import { testimonials } from '../data/testimonials';
+import { services } from '../data/services';
 import type { Service } from '../data/services';
 import type { Faq } from '../data/faqs';
 
 const SITE = business.url;
+
+// Build date, used as a freshness (dateModified) signal on every page.
+export const BUILD_DATE = new Date().toISOString().slice(0, 10);
 
 /**
  * Rating note: the four testimonials are real and verbatim but carry no
@@ -103,6 +107,50 @@ export function serviceSchema(service: Service) {
         itemOffered: { '@type': 'Service', name: w },
       })),
     },
+  };
+}
+
+export function webSiteSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE}/#website`,
+    name: business.name,
+    url: SITE,
+    publisher: { '@id': `${SITE}/#business` },
+    inLanguage: 'en-GB',
+  };
+}
+
+/** A WebPage node carrying a dateModified freshness signal, injected per page. */
+export function webPageSchema(path: string, name: string, description: string) {
+  const url = new URL(path, SITE).href;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name,
+    description,
+    isPartOf: { '@id': `${SITE}/#website` },
+    about: { '@id': `${SITE}/#business` },
+    inLanguage: 'en-GB',
+    dateModified: BUILD_DATE,
+  };
+}
+
+/** ItemList of all services, for the services overview page. */
+export function servicesItemListSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Home Works Ltd services',
+    itemListElement: services.map((s, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: s.name,
+      url: `${SITE}/services/${s.slug}`,
+    })),
   };
 }
 
