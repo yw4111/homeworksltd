@@ -1,5 +1,6 @@
 ---
 import type { Service } from '../data/services';
+import { withBase } from '../lib/paths';
 
 interface Props {
   service: Service;
@@ -11,7 +12,7 @@ const { service, index } = Astro.props;
 const ref = String(index + 1).padStart(2, '0');
 ---
 
-<a class="service-card" href={`/services/${service.slug}/`}>
+<a class="service-card" href={withBase(`/services/${service.slug}/`)}>
   <div class="service-card__head">
     <span class="service-card__ref">SVC-{ref}</span>
     {service.credential && <span class="stamp">{service.credential}</span>}

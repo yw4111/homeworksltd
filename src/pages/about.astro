@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { business } from '../data/business';
+import { withBase } from '../lib/paths';
 ---
 
 <BaseLayout
@@ -110,8 +111,8 @@ import { business } from '../data/business';
         {business.hours.display}.
       </p>
       <div class="about-actions">
-        <a class="btn btn--primary" href="/contact/">Contact and booking</a>
-        <a class="btn btn--ghost" href="/services/">See our services</a>
+        <a class="btn btn--primary" href={withBase('/contact/')}>Contact and booking</a>
+        <a class="btn btn--ghost" href={withBase('/services/')}>See our services</a>
       </div>
     </div>
   </section>

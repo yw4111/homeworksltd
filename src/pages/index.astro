@@ -7,6 +7,7 @@ import { business } from '../data/business';
 import { services } from '../data/services';
 import { homeFaqs } from '../data/faqs';
 import { localBusinessSchema, faqSchema } from '../lib/schema';
+import { withBase } from '../lib/paths';
 
 const schema = [localBusinessSchema(), faqSchema(homeFaqs)];
 
@@ -48,7 +49,7 @@ const whyChoose = [
         and agents, all from one accredited team.
       </p>
       <div class="hero__actions">
-        <a class="btn btn--primary" href="/contact/">Book a job</a>
+        <a class="btn btn--primary" href={withBase('/contact/')}>Book a job</a>
         <a class="btn btn--ghost" href={`tel:${business.phoneHref}`}>
           Call {business.phoneDisplay}
         </a>
@@ -119,7 +120,7 @@ const whyChoose = [
           <a class="btn btn--primary" href={`tel:${business.phoneHref}`}>
             Call {business.phoneDisplay}
           </a>
-          <a class="btn btn--ghost" href="/contact/">Contact and booking</a>
+          <a class="btn btn--ghost" href={withBase('/contact/')}>Contact and booking</a>
         </div>
       </div>
 

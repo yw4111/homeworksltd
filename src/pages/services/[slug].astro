@@ -4,6 +4,7 @@ import FaqBlock from '../../components/FaqBlock.astro';
 import { business } from '../../data/business';
 import { services } from '../../data/services';
 import { serviceSchema, faqSchema } from '../../lib/schema';
+import { withBase } from '../../lib/paths';
 
 export function getStaticPaths() {
   return services.map((service) => ({
@@ -28,7 +29,7 @@ const related = services.filter((s) => s.slug !== service.slug).slice(0, 3);
   <section class="section section--petrol">
     <div class="wrap">
       <p class="crumbs">
-        <a href="/services/">Services</a> <span aria-hidden="true">/</span>
+        <a href={withBase('/services/')}>Services</a> <span aria-hidden="true">/</span>
         <span>{service.shortName}</span>
       </p>
       <div class="svc-head">
@@ -40,7 +41,7 @@ const related = services.filter((s) => s.slug !== service.slug).slice(0, 3);
         <a class="btn btn--primary" href={`tel:${business.phoneHref}`}>
           Call {business.phoneDisplay}
         </a>
-        <a class="btn btn--ghost" href="/contact/">Book this work</a>
+        <a class="btn btn--ghost" href={withBase('/contact/')}>Book this work</a>
       </div>
     </div>
   </section>
@@ -91,7 +92,7 @@ const related = services.filter((s) => s.slug !== service.slug).slice(0, 3);
         {
           related.map((r) => (
             <li>
-              <a href={`/services/${r.slug}/`}>
+              <a href={withBase(`/services/${r.slug}/`)}>
                 <span class="related__name">{r.name}</span>
                 <span class="related__summary">{r.summary}</span>
               </a>

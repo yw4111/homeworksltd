@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { business } from '../data/business';
 import { services } from '../data/services';
 import { localBusinessSchema } from '../lib/schema';
+import { withBase } from '../lib/paths';
 
 const schema = [localBusinessSchema()];
 ---
@@ -81,7 +82,7 @@ const schema = [localBusinessSchema()];
           method="POST"
           data-netlify="true"
           netlify-honeypot="bot-field"
-          action="/contact/thanks/"
+          action={withBase('/contact/thanks/')}
         >
           <input type="hidden" name="form-name" value="booking" />
           <p class="hidden-field">

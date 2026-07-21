@@ -4,7 +4,11 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://homeworksltd.co.uk',
+  // GitHub Pages project site. Swap these two lines for
+  //   site: 'https://homeworksltd.co.uk'
+  // (and drop `base`) once a custom domain is attached.
+  site: 'https://yw4111.github.io',
+  base: '/homeworksltd',
   trailingSlash: 'always',
   build: {
     format: 'directory',

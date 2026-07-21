@@ -1,6 +1,7 @@
 ---
 import { business } from '../data/business';
 import { services } from '../data/services';
+import { withBase } from '../lib/paths';
 ---
 
 <footer class="site-footer">
@@ -29,11 +30,11 @@ import { services } from '../data/services';
         {
           services.slice(0, 7).map((s) => (
             <li>
-              <a href={`/services/${s.slug}/`}>{s.shortName}</a>
+              <a href={withBase(`/services/${s.slug}/`)}>{s.shortName}</a>
             </li>
           ))
         }
-        <li><a href="/services/">All services</a></li>
+        <li><a href={withBase('/services/')}>All services</a></li>
       </ul>
     </div>
   </div>
