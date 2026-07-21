@@ -1,0 +1,235 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import Testimonials from '../components/Testimonials.astro';
+import FaqBlock from '../components/FaqBlock.astro';
+import { business } from '../data/business';
+import { services } from '../data/services';
+import { homeFaqs } from '../data/faqs';
+import { localBusinessSchema, faqSchema } from '../lib/schema';
+
+const schema = [localBusinessSchema(), faqSchema(homeFaqs)];
+
+const whyChoose = [
+  {
+    label: 'Since 1995',
+    text: 'Family owned and operated for 30 years, so you deal with the same firm from quote to completion.',
+  },
+  {
+    label: 'One firm, every trade',
+    text: 'Building, heating, electrical, plumbing, roofing and more under one roof, which keeps a mixed job simple.',
+  },
+  {
+    label: 'Accredited work',
+    text: 'Gas Safe, NICEIC, Certass and Checkatrade, so gas, electrical and window work is certified properly.',
+  },
+  {
+    label: 'Clear pricing',
+    text: '25% deposit at booking and the balance on completion, with the price quoted being the price you pay.',
+  },
+];
+---
+
+<BaseLayout
+  title="Home Works Ltd | Building and maintenance in Kent"
+  description="Home Works Ltd is a family owned building and maintenance firm covering Kent and the South East since 1995. Gas Safe, NICEIC and Certass accredited. Call 01689 86 11 11."
+  path="/"
+  schema={schema}
+>
+  <!-- Hero with direct-answer summary -->
+  <section class="section section--petrol hero">
+    <div class="wrap">
+      <span class="eyebrow">{business.establishedLabel} &middot; Family owned</span>
+      <h1>Property repairs and building work across Kent, done by one trusted firm</h1>
+      <p class="lede hero__answer">
+        Home Works Ltd is a family owned building and maintenance company covering
+        Kent and the South East of England since 1995. We handle boilers, electrics,
+        plumbing, roofing, carpentry, building and more, for homeowners, landlords
+        and agents, all from one accredited team.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="/contact/">Book a job</a>
+        <a class="btn btn--ghost" href={`tel:${business.phoneHref}`}>
+          Call {business.phoneDisplay}
+        </a>
+      </div>
+      <p class="hero__stamps">
+        {business.accreditations.map((a) => <span class="stamp">{a.name}</span>)}
+      </p>
+    </div>
+  </section>
+
+  <!-- Services overview -->
+  <section class="section section--stone" id="services">
+    <div class="wrap">
+      <span class="eyebrow">Job schedule</span>
+      <h2>What we can do for you</h2>
+      <p class="lede muted">
+        Every service below is real work we carry out. Pick a trade to see the
+        detail and the questions we get asked most.
+      </p>
+      <div class="grid grid--3 services-grid">
+        {services.map((s, i) => <ServiceCard service={s} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why choose -->
+  <section class="section section--paper">
+    <div class="wrap">
+      <span class="eyebrow">Why Home Works</span>
+      <h2>Why customers pick us</h2>
+      <div class="grid grid--2 why-grid">
+        {
+          whyChoose.map((w) => (
+            <div class="why-card">
+              <span class="why-card__label">{w.label}</span>
+              <p>{w.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section section--stone">
+    <Testimonials />
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section--paper">
+    <div class="wrap faq-wrap">
+      <span class="eyebrow">Answers</span>
+      <FaqBlock faqs={homeFaqs} heading="Questions we get asked" level="h3" />
+    </div>
+  </section>
+
+  <!-- Contact CTA with record-card details -->
+  <section class="section section--petrol" id="contact">
+    <div class="wrap contact-cta">
+      <div>
+        <span class="eyebrow">Book a job</span>
+        <h2>Tell us what needs doing</h2>
+        <p class="lede">
+          Call or email and we will arrange a time to look at the work. We cover
+          {business.areaServedDisplay}.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href={`tel:${business.phoneHref}`}>
+            Call {business.phoneDisplay}
+          </a>
+          <a class="btn btn--ghost" href="/contact/">Contact and booking</a>
+        </div>
+      </div>
+
+      <div class="schedule contact-card">
+        <div class="schedule__head">
+          <span>Home Works Ltd</span>
+          <span>Record card</span>
+        </div>
+        <div class="schedule__row">
+          <span class="schedule__label">Phone</span>
+          <span class="schedule__value">
+            <a href={`tel:${business.phoneHref}`}>{business.phoneDisplay}</a>
+          </span>
+        </div>
+        <div class="schedule__row">
+          <span class="schedule__label">Email</span>
+          <span class="schedule__value">
+            <a href={`mailto:${business.email}`}>{business.email}</a>
+          </span>
+        </div>
+        <div class="schedule__row">
+          <span class="schedule__label">Hours</span>
+          <span class="schedule__value">{business.hours.display}</span>
+        </div>
+        <div class="schedule__row">
+          <span class="schedule__label">Area</span>
+          <span class="schedule__value">{business.areaServedDisplay}</span>
+        </div>
+        <div class="schedule__row">
+          <span class="schedule__label">Insurance</span>
+          <span class="schedule__value">{business.insurance.limitDisplay} public liability</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-block: clamp(3rem, 9vw, 6rem);
+  }
+
+  .hero__answer {
+    margin-block: 1.25rem 2rem;
+    color: var(--stone);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+  }
+
+  .hero__stamps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .services-grid {
+    margin-top: 2rem;
+  }
+
+  .why-grid {
+    margin-top: 2rem;
+  }
+
+  .why-card {
+    background: var(--white);
+    border: 1.5px solid var(--hairline);
+    border-radius: var(--radius);
+    padding: 1.4rem;
+  }
+
+  .why-card__label {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--petrol);
+    border-bottom: 2px solid var(--amber);
+    padding-bottom: 0.2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .why-card p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .faq-wrap {
+    max-width: 52rem;
+  }
+
+  .contact-cta {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  @media (min-width: 46rem) {
+    .contact-cta {
+      grid-template-columns: 1.2fr 1fr;
+    }
+  }
+
+  .contact-card {
+    background: var(--paper);
+    color: var(--ink);
+  }
+</style>

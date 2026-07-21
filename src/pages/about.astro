@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { business } from '../data/business';
+---
+
+<BaseLayout
+  title="About | Home Works Ltd"
+  description="Home Works Ltd is a family owned building firm trading since 1995, covering Kent and the South East. Gas Safe, NICEIC, Certass and Checkatrade accredited with £1 million public liability insurance."
+  path="/about/"
+>
+  <section class="section section--petrol">
+    <div class="wrap">
+      <span class="eyebrow">{business.establishedLabel} &middot; Family owned</span>
+      <h1>A family firm looking after Kent properties since 1995</h1>
+      <p class="lede" style="color: var(--stone);">
+        Home Works Ltd is a family owned and operated building and maintenance
+        company. We have worked across {business.areaServedDisplay} since 1995,
+        which is more than 30 years of looking after homes and rental properties
+        for the same kind of customers we started with.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--stone">
+    <div class="wrap about-body">
+      <div class="about-main">
+        <h2>Who we work for</h2>
+        <p>
+          We work for homeowners, landlords, tenants, estate agents and property
+          management agents. A lot of our work comes from people who need one
+          reliable firm they can call for different jobs, from a dripping tap to a
+          full roof, without lining up separate trades each time.
+        </p>
+
+        <h2>How we work</h2>
+        <p>
+          You deal with the same family firm from the first call to the finished
+          job. We quote clearly, protect your home while we work and clean up when
+          we are done. The price we quote is the price you pay.
+        </p>
+
+        <h2>Payment terms</h2>
+        <p>
+          We take a {business.paymentTerms.replace(/\.$/, '')}. There are no
+          surprises added at the end.
+        </p>
+      </div>
+
+      <aside class="about-side">
+        <div class="schedule">
+          <div class="schedule__head">
+            <span>Home Works Ltd</span>
+            <span>Firm details</span>
+          </div>
+          <div class="schedule__row">
+            <span class="schedule__label">Trading since</span>
+            <span class="schedule__value">1995</span>
+          </div>
+          <div class="schedule__row">
+            <span class="schedule__label">Ownership</span>
+            <span class="schedule__value">Family owned</span>
+          </div>
+          <div class="schedule__row">
+            <span class="schedule__label">Area served</span>
+            <span class="schedule__value">{business.areaServedDisplay}</span>
+          </div>
+          <div class="schedule__row">
+            <span class="schedule__label">Insurance</span>
+            <span class="schedule__value">{business.insurance.limitDisplay} public liability</span>
+          </div>
+          <div class="schedule__row">
+            <span class="schedule__label">Deposit</span>
+            <span class="schedule__value">25% at booking</span>
+          </div>
+          <div class="schedule__row">
+            <span class="schedule__label">Balance</span>
+            <span class="schedule__value">Due on completion</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--paper">
+    <div class="wrap">
+      <span class="eyebrow">Accreditations</span>
+      <h2>Accredited and insured</h2>
+      <p class="lede muted">
+        Our gas, electrical and window work is registered and certified. That
+        means the paperwork is right for landlords, sales and your own records.
+      </p>
+      <div class="grid grid--2 accred-grid">
+        {
+          business.accreditations.map((a) => (
+            <div class="accred-card">
+              <span class="stamp">{a.name}</span>
+              <p>{a.note}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--petrol">
+    <div class="wrap">
+      <h2>Talk to the family firm</h2>
+      <p class="lede" style="color: var(--stone);">
+        Call {business.phoneDisplay} or email {business.email}. We are open
+        {business.hours.display}.
+      </p>
+      <div class="about-actions">
+        <a class="btn btn--primary" href="/contact/">Contact and booking</a>
+        <a class="btn btn--ghost" href="/services/">See our services</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-body {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  @media (min-width: 46rem) {
+    .about-body {
+      grid-template-columns: 1.5fr 1fr;
+    }
+  }
+
+  .about-main h2 {
+    margin-top: 2rem;
+  }
+
+  .about-main h2:first-child {
+    margin-top: 0;
+  }
+
+  .about-main p {
+    max-width: 46rem;
+    color: var(--muted);
+  }
+
+  .accred-grid {
+    margin-top: 2rem;
+  }
+
+  .accred-card {
+    background: var(--white);
+    border: 1.5px solid var(--hairline);
+    border-radius: var(--radius);
+    padding: 1.3rem;
+  }
+
+  .accred-card .stamp {
+    margin-bottom: 0.75rem;
+  }
+
+  .accred-card p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .about-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 1.5rem;
+  }
+</style>

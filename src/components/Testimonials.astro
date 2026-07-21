@@ -1,0 +1,58 @@
+---
+import { testimonials } from '../data/testimonials';
+
+interface Props {
+  heading?: string;
+}
+
+const { heading = 'What customers say' } = Astro.props;
+---
+
+<div class="wrap">
+  <span class="eyebrow">Verified feedback</span>
+  <h2>{heading}</h2>
+  <div class="grid grid--2 testimonials">
+    {
+      testimonials.map((t) => (
+        <figure class="testimonial">
+          <blockquote>
+            <p>{t.quote}</p>
+          </blockquote>
+          <figcaption>{t.author}</figcaption>
+        </figure>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .testimonials {
+    margin-top: 2rem;
+  }
+
+  .testimonial {
+    margin: 0;
+    background: var(--white);
+    border: 1.5px solid var(--hairline);
+    border-left: 3px solid var(--amber);
+    border-radius: var(--radius);
+    padding: 1.4rem;
+  }
+
+  .testimonial blockquote {
+    margin: 0 0 1rem;
+  }
+
+  .testimonial p {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  .testimonial figcaption {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+</style>

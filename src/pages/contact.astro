@@ -1,0 +1,215 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { business } from '../data/business';
+import { services } from '../data/services';
+import { localBusinessSchema } from '../lib/schema';
+
+const schema = [localBusinessSchema()];
+---
+
+<BaseLayout
+  title="Contact and booking | Home Works Ltd"
+  description="Contact Home Works Ltd to book building or maintenance work in Kent and the South East. Call 01689 86 11 11, email info@homeworksltd.co.uk, open Monday to Friday 9am to 5pm."
+  path="/contact/"
+  schema={schema}
+>
+  <section class="section section--petrol">
+    <div class="wrap">
+      <span class="eyebrow">Book a job</span>
+      <h1>Contact and booking</h1>
+      <p class="lede" style="color: var(--stone);">
+        The quickest way to book is to call. Tell us what needs doing and where
+        the property is, and we will arrange a time to look at the work. We cover
+        {business.areaServedDisplay}.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--stone">
+    <div class="wrap contact-grid">
+      <!-- Record-card contact details -->
+      <div>
+        <div class="schedule">
+          <div class="schedule__head">
+            <span>Home Works Ltd</span>
+            <span>Contact card</span>
+          </div>
+          <div class="schedule__row">
+            <span class="schedule__label">Phone</span>
+            <span class="schedule__value">
+              <a href={`tel:${business.phoneHref}`}>{business.phoneDisplay}</a>
+            </span>
+          </div>
+          <div class="schedule__row">
+            <span class="schedule__label">Email</span>
+            <span class="schedule__value">
+              <a href={`mailto:${business.email}`}>{business.email}</a>
+            </span>
+          </div>
+          <div class="schedule__row">
+            <span class="schedule__label">Address</span>
+            <span class="schedule__value">{business.addressDisplay}</span>
+          </div>
+          <div class="schedule__row">
+            <span class="schedule__label">Hours</span>
+            <span class="schedule__value">{business.hours.display}</span>
+          </div>
+          <div class="schedule__row">
+            <span class="schedule__label">Area served</span>
+            <span class="schedule__value">{business.areaServedDisplay}</span>
+          </div>
+        </div>
+
+        <p class="map-link">
+          <a class="btn btn--ghost" href={business.mapUrl} target="_blank" rel="noopener">
+            Open in Google Maps
+          </a>
+        </p>
+      </div>
+
+      <!-- Booking form. Wired for Netlify Forms; the phone and email above work
+           regardless of host. -->
+      <div>
+        <h2>Ask for a booking</h2>
+        <p class="muted">
+          Send a few details and we will get back to you. Fields marked with a
+          star are needed.
+        </p>
+        <form
+          class="booking"
+          name="booking"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          action="/contact/thanks/"
+        >
+          <input type="hidden" name="form-name" value="booking" />
+          <p class="hidden-field">
+            <label>Leave this empty <input name="bot-field" /></label>
+          </p>
+
+          <div class="field">
+            <label for="name">Your name <span aria-hidden="true">*</span></label>
+            <input id="name" name="name" type="text" required autocomplete="name" />
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="phone">Phone <span aria-hidden="true">*</span></label>
+              <input id="phone" name="phone" type="tel" required autocomplete="tel" />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="postcode">Property postcode</label>
+            <input id="postcode" name="postcode" type="text" autocomplete="postal-code" />
+          </div>
+
+          <div class="field">
+            <label for="service">What do you need</label>
+            <select id="service" name="service">
+              <option value="">Choose a service</option>
+              {services.map((s) => <option value={s.name}>{s.name}</option>)}
+              <option value="Something else">Something else</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="message">Details of the job <span aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+
+          <button class="btn btn--primary" type="submit">Send booking request</button>
+          <p class="form-note muted">
+            Prefer to talk it through? Call
+            <a href={`tel:${business.phoneHref}`}>{business.phoneDisplay}</a>.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  @media (min-width: 46rem) {
+    .contact-grid {
+      grid-template-columns: 1fr 1.2fr;
+    }
+  }
+
+  .map-link {
+    margin-top: 1.25rem;
+  }
+
+  .booking {
+    margin-top: 1.25rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .field {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .field-row {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 30rem) {
+    .field-row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .booking label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .booking input,
+  .booking select,
+  .booking textarea {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    padding: 0.65rem 0.75rem;
+    border: 1.5px solid var(--hairline);
+    border-radius: var(--radius);
+    background: var(--white);
+    color: var(--ink);
+    width: 100%;
+  }
+
+  .booking input:focus,
+  .booking select:focus,
+  .booking textarea:focus {
+    border-color: var(--petrol);
+  }
+
+  .booking label span {
+    color: var(--amber);
+  }
+
+  .hidden-field {
+    display: none;
+  }
+
+  .form-note {
+    font-size: 0.9rem;
+    margin: 0;
+  }
+</style>

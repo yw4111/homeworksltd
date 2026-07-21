@@ -1,0 +1,39 @@
+# Home Works Ltd
+# Search and AI answer engines are welcome to crawl this site.
+
+User-agent: *
+Allow: /
+
+# Google AI (Gemini, AI Overviews)
+User-agent: Google-Extended
+Allow: /
+
+# OpenAI (ChatGPT)
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic (Claude)
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Common Crawl
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://homeworksltd.co.uk/sitemap-index.xml

@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import { business } from '../../data/business';
+import { services } from '../../data/services';
+---
+
+<BaseLayout
+  title="Services | Home Works Ltd"
+  description="Building, heating, electrical, plumbing, roofing, carpentry and more across Kent and the South East. Every trade handled by one accredited family firm since 1995."
+  path="/services/"
+>
+  <section class="section section--petrol">
+    <div class="wrap">
+      <span class="eyebrow">Job schedule</span>
+      <h1>Our services</h1>
+      <p class="lede" style="color: var(--stone);">
+        Home Works Ltd covers building, maintenance and property repairs across
+        {business.areaServedDisplay}. Every service listed here is real work we
+        carry out. Pick a trade to see the detail, what is included and the
+        questions we get asked most.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--stone">
+    <div class="wrap">
+      <div class="grid grid--3">
+        {services.map((s, i) => <ServiceCard service={s} index={i} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

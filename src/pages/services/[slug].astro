@@ -1,0 +1,215 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FaqBlock from '../../components/FaqBlock.astro';
+import { business } from '../../data/business';
+import { services } from '../../data/services';
+import { serviceSchema, faqSchema } from '../../lib/schema';
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+const path = `/services/${service.slug}/`;
+const schema = [serviceSchema(service), faqSchema(service.faqs)];
+
+const related = services.filter((s) => s.slug !== service.slug).slice(0, 3);
+---
+
+<BaseLayout
+  title={`${service.name} | Home Works Ltd`}
+  description={service.directAnswer}
+  path={path}
+  schema={schema}
+>
+  <section class="section section--petrol">
+    <div class="wrap">
+      <p class="crumbs">
+        <a href="/services/">Services</a> <span aria-hidden="true">/</span>
+        <span>{service.shortName}</span>
+      </p>
+      <div class="svc-head">
+        <h1>{service.name}</h1>
+        {service.credential && <span class="stamp">{service.credential} accredited</span>}
+      </div>
+      <p class="lede svc-answer">{service.directAnswer}</p>
+      <div class="svc-actions">
+        <a class="btn btn--primary" href={`tel:${business.phoneHref}`}>
+          Call {business.phoneDisplay}
+        </a>
+        <a class="btn btn--ghost" href="/contact/">Book this work</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--stone">
+    <div class="wrap svc-body">
+      <div class="svc-detail">
+        <h2>What this covers</h2>
+        {service.detail.map((p) => <p class="svc-para">{p}</p>)}
+      </div>
+
+      <aside class="svc-side">
+        <div class="schedule">
+          <div class="schedule__head">
+            <span>{service.shortName}</span>
+            <span>Work covered</span>
+          </div>
+          <div class="schedule__list">
+            <ul class="ticklist">
+              {service.work.map((w) => <li>{w}</li>)}
+            </ul>
+          </div>
+        </div>
+        {
+          service.credential && (
+            <p class="svc-cred">
+              <span class="stamp">{service.credential}</span>
+              Work carried out and certified to {service.credential} standards.
+            </p>
+          )
+        }
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--paper">
+    <div class="wrap svc-faq">
+      <span class="eyebrow">Answers</span>
+      <FaqBlock faqs={service.faqs} heading={`${service.shortName} questions`} level="h3" />
+    </div>
+  </section>
+
+  <section class="section section--stone">
+    <div class="wrap">
+      <span class="eyebrow">More services</span>
+      <h2>Other work we do</h2>
+      <ul class="related">
+        {
+          related.map((r) => (
+            <li>
+              <a href={`/services/${r.slug}/`}>
+                <span class="related__name">{r.name}</span>
+                <span class="related__summary">{r.summary}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .crumbs {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 1rem;
+  }
+
+  .crumbs a {
+    color: var(--amber);
+  }
+
+  .svc-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .svc-answer {
+    color: var(--stone);
+    margin-top: 1rem;
+  }
+
+  .svc-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 1.5rem;
+  }
+
+  .svc-body {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  @media (min-width: 46rem) {
+    .svc-body {
+      grid-template-columns: 1.5fr 1fr;
+    }
+  }
+
+  .svc-para {
+    max-width: 46rem;
+    font-size: 1.05rem;
+  }
+
+  .schedule__list {
+    padding: 1.1rem;
+  }
+
+  .svc-cred {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+    margin-top: 1.25rem;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  .svc-faq {
+    max-width: 52rem;
+  }
+
+  .related {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 46rem) {
+    .related {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .related a {
+    display: block;
+    background: var(--white);
+    border: 1.5px solid var(--hairline);
+    border-radius: var(--radius);
+    padding: 1.1rem;
+    text-decoration: none;
+    color: var(--ink);
+    height: 100%;
+  }
+
+  .related a:hover {
+    border-color: var(--petrol);
+  }
+
+  .related__name {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+
+  .related__summary {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+</style>

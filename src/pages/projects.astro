@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { business } from '../data/business';
+
+// Placeholder slots only. Real project photos and captions to be supplied by
+// the owner. Nothing here claims to be a completed job.
+const slots = [
+  'Boiler and heating',
+  'Bathroom installation',
+  'Roof repair',
+  'Kitchen refurbishment',
+  'Electrical rewire',
+  'External decoration',
+];
+---
+
+<BaseLayout
+  title="Projects | Home Works Ltd"
+  description="A gallery of building and maintenance work by Home Works Ltd across Kent and the South East. Project photos are being added."
+  path="/projects/"
+>
+  <section class="section section--petrol">
+    <div class="wrap">
+      <span class="eyebrow">Recent work</span>
+      <h1>Projects</h1>
+      <p class="lede" style="color: var(--stone);">
+        We are putting together a gallery of real jobs from across
+        {business.areaServedDisplay}. Photos of completed work will be added here.
+        In the meantime, call {business.phoneDisplay} to talk through a job like
+        yours.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--stone">
+    <div class="wrap">
+      <div class="grid grid--3 gallery">
+        {
+          slots.map((label, i) => (
+            <figure class="shot">
+              <div class="shot__frame" role="img" aria-label={`Placeholder for a ${label.toLowerCase()} project photo`}>
+                <span class="shot__ref">IMG-{String(i + 1).padStart(2, '0')}</span>
+                <span class="shot__note">Photo to be added</span>
+              </div>
+              <figcaption>{label}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+      <p class="gallery__note muted">
+        Are you the owner of Home Works Ltd? Send project photos and a one line
+        description for each and they will replace these placeholders.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .gallery {
+    margin-bottom: 2rem;
+  }
+
+  .shot {
+    margin: 0;
+  }
+
+  .shot__frame {
+    aspect-ratio: 4 / 3;
+    border: 1.5px dashed var(--hairline);
+    border-radius: var(--radius);
+    background: repeating-linear-gradient(
+      45deg,
+      var(--paper),
+      var(--paper) 10px,
+      #efeee7 10px,
+      #efeee7 20px
+    );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+
+  .shot__ref {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+
+  .shot__note {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .shot figcaption {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    margin-top: 0.6rem;
+  }
+
+  .gallery__note {
+    max-width: 40rem;
+    font-size: 0.9rem;
+  }
+</style>

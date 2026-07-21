@@ -1,0 +1,131 @@
+---
+import { business } from '../data/business';
+import { services } from '../data/services';
+---
+
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div>
+      <p class="site-footer__name">{business.name}</p>
+      <p class="muted-light">{business.descriptionShort}</p>
+      <p class="stamp-row">
+        {business.accreditations.map((a) => <span class="stamp">{a.name}</span>)}
+      </p>
+    </div>
+
+    <div>
+      <h2 class="site-footer__head">Contact</h2>
+      <address class="site-footer__address">
+        {business.addressDisplay}<br />
+        <a href={`tel:${business.phoneHref}`}>{business.phoneDisplay}</a><br />
+        <a href={`mailto:${business.email}`}>{business.email}</a><br />
+        <span class="muted-light">{business.hours.display}</span>
+      </address>
+    </div>
+
+    <div>
+      <h2 class="site-footer__head">Services</h2>
+      <ul class="site-footer__links">
+        {
+          services.slice(0, 7).map((s) => (
+            <li>
+              <a href={`/services/${s.slug}/`}>{s.shortName}</a>
+            </li>
+          ))
+        }
+        <li><a href="/services/">All services</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap site-footer__legal">
+    <p>
+      &copy; {new Date().getFullYear()} {business.name}. {business.establishedLabel}.
+      Public liability insurance {business.insurance.limitDisplay} indemnity limit.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--ink);
+    color: var(--stone);
+    padding-block: clamp(2.5rem, 6vw, 4rem) 1.5rem;
+  }
+
+  .site-footer__grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  @media (min-width: 45rem) {
+    .site-footer__grid {
+      grid-template-columns: 1.4fr 1fr 1fr;
+    }
+  }
+
+  .site-footer__name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .muted-light {
+    color: #a9aaa6;
+  }
+
+  .stamp-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 1rem;
+  }
+
+  .site-footer .stamp {
+    color: var(--stone);
+    border-color: #4a4d4a;
+  }
+
+  .site-footer__head {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 0.8rem;
+  }
+
+  .site-footer__address {
+    font-style: normal;
+    line-height: 1.8;
+  }
+
+  .site-footer a {
+    color: var(--stone);
+  }
+
+  .site-footer a:hover {
+    color: var(--white);
+  }
+
+  .site-footer__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    line-height: 1.9;
+  }
+
+  .site-footer__legal {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #34362f;
+    font-size: 0.82rem;
+    color: #a9aaa6;
+  }
+
+  .site-footer__legal p {
+    margin: 0;
+  }
+</style>
